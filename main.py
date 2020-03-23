@@ -1,34 +1,42 @@
+from src.log import Logger
 import time
 import datetime
-import argparse 
+import typer
 import os
+from enum import Enum
+import logging
 
-def setParameters():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-w","--workDuration", help="Set work time (minutes)", default=60, type=int)
-    parser.add_argument("-b","--breakDuration", help="Set break time (minutes)", default =5, type=int)
-    args = parser.parse_args()
+class SessionType(str, Enum):
+    workTime = 1
+    breakTime = 2
 
-    return args.workDuration, args.breakDuration
-    
+app = typer.Typer()
 
 def countdown(workMinutes: int):
     workSeconds = workMinutes * 60
-    while(workSeconds > 0):
+    while workSeconds > 0:
         print(datetime.timedelta(seconds=workSeconds))
         time.sleep(1)
-        workSeconds = workSeconds -1
+        workSeconds = workSeconds - 1
+
 
 def checkNextTurn(workDuration: int, breakDuration: int):
-    
+
     description = f"""
-    "What's next? 
+    What's next? 
     1 for work.
     2 for break. 
-    Enter to exit"
+    Enter to exit
     """
-    option:str = input(description)
+    option: str = typer.prompt(description, type=SessionType)
     if option == "1":
+        workDescription:str = typer.prompt("What do you plan to do?")
+        descr:str = f"""
+        Started work sessions with {workDuration} minutes.
+        TODO:
+        {workDescription}
+        """
+        logging.info(descr)
         countdown(workDuration)
         notify("Section finished", "Work has finished! Ready for next?")
     elif option == "2":
@@ -40,13 +48,22 @@ def checkNextTurn(workDuration: int, breakDuration: int):
 
 
 def notify(title, text):
-    os.system("""
-              osascript -e 'display notification "{}" with title "{}"'
-              """.format(text, title))
-    os.system("osascript -e 'say \"Finished!\"'")
+    os.system(
+        f"""
+              osascript -e 'say \"Finished!\"';
+              osascript -e 'display alert "{text}" with title "{title}"'
+              """
+    )
 
 
-workDuration, breakDuration = setParameters()
-while(True):
+@app.command()
+def scheduler(
+    workDuration: int = typer.Option(25, "-w", help="Set work time (minutes)"),
+    breakDuration: int = typer.Option(5, "-b", help="Set break time (minutes)"),
+):
+    while True:
+        checkNextTurn(workDuration, breakDuration)
 
-    checkNextTurn(workDuration, breakDuration)
+if __name__ == "__main__":
+    Logger()
+    app()
