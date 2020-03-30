@@ -5,6 +5,7 @@ import typer
 import os
 from enum import Enum
 import logging
+import glob
 
 
 class SessionType(str, Enum):
@@ -15,8 +16,8 @@ class SessionType(str, Enum):
 
 
 class Mode(str, Enum):
-    manual = 1
-    pomodoro = 2
+    manual = "manual"
+    pomodoro = "pomodoro"
 
 
 app = typer.Typer()
@@ -37,11 +38,11 @@ def checkNextTurn(
     option: str = typer.prompt(description, type=SessionType)
 
     if option == SessionType.workTime:
-        runSession(workDuration, option)
+        runSession(workDuration, False, option)
     elif option == SessionType.breakTime:
-        runSession(breakDuration, option)
+        runSession(breakDuration, False, option)
     elif option == SessionType.bigBreakTime:
-        runSession(bigBreakDuration, option)
+        runSession(bigBreakDuration, False, option)
     else:
         print("Have a good time off!")
         exit()
@@ -90,6 +91,20 @@ def notify(title, text):
 
 
 @app.command()
+def log(
+    last_log: bool = typer.Option(False, "--last", "-l", help="Open last log file"),
+):
+    if last_log:
+        list_of_files = glob.glob(
+            "./logs/*.log"
+        )
+        latest_file = max(list_of_files, key=os.path.getctime)
+        os.system(f"open {latest_file}")
+    else:
+        os.system("open logs")
+
+
+@app.command()
 def scheduler(
     workDuration: int = typer.Option(
         25, "--workDuration", "-w", help="Set work time (minutes)"
@@ -107,11 +122,8 @@ def scheduler(
         help="Set pomodoro mode. This will change the flow of work to 4 work sessions with small breaks and finish with a big Break",
     ),
     prompt: bool = typer.Option(
-        True,
-        "--prompt",
-        "-p",
-        help="Set if it should prompt to go for next session"
-    )
+        True, "--prompt", "-p", help="Set if it should prompt to go for next session"
+    ),
 ):
     """Run depending on mode"""
 
