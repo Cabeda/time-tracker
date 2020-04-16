@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "time-tracker"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Jose Cabeda <jecabeda@gmail.com>"]
 readme = "README.md"

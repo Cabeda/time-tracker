@@ -12,12 +12,20 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Python: Run main file with args",
+            "name": "Python: Run main file scheduler",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/time_tracker/main.py",
             "console": "integratedTerminal",
             "args" : ["--workDuration", "1", "--breakDuration","1"]
+        },
+        {
+            "name": "Python: Run main file log",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/time_tracker/main.py",
+            "console": "integratedTerminal",
+            "args" : ["log"]
         },
     ]
 }

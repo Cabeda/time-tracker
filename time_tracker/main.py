@@ -1,11 +1,10 @@
-from log import Logger
+from time_tracker.log import Logger
 import time
 import datetime
 import typer
 import os
 from enum import Enum
 import logging
-import glob
 
 
 class SessionType(str, Enum):
@@ -21,6 +20,13 @@ class Mode(str, Enum):
 
 
 app = typer.Typer()
+
+
+@app.callback()
+def callback():
+    """
+    Time tracker cli
+    """
 
 
 def checkNextTurn(
@@ -92,25 +98,16 @@ def notify(title, text):
 
 @app.command()
 def log(
-    last_log: bool = typer.Option(True, "--last", "-l", help="Open last log file"),
+    last_log: bool = typer.Option(False, "--last", "-l", help="Open last log file"),
     output: bool = typer.Option(
         False, "--output", "-o", help="Return log file content to terminal"
     ),
 ):
-    if last_log:
-        list_of_files = glob.glob("./logs/*.log")
-        latest_file = max(list_of_files, key=os.path.getctime)
-        if output:
-            with open(latest_file, "r") as file:
-                print(file.read())
-        else:
-            os.system(f"open {latest_file}")
-    else:
-        os.system("open logs")
+    Logger.get_logs(last_log, output)
 
 
 @app.command()
-def scheduler(
+def track(
     workDuration: int = typer.Option(
         25, "--workDuration", "-w", help="Set work time (minutes)"
     ),
