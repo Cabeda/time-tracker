@@ -1,3 +1,4 @@
+from typing import Optional
 from time_tracker.log import Logger
 import time
 import datetime
@@ -5,6 +6,7 @@ import typer
 import os
 from enum import Enum
 import logging
+from pathlib import Path
 
 
 class SessionType(str, Enum):
@@ -101,9 +103,10 @@ def notify(title, text):
 def log(
     last_log: bool = typer.Option(False, "--last", "-l", help="Open last log file"),
     output: bool = typer.Option(
-        False, "--output", "-o", help="Return log file content to terminal"
+        True, "--output", "-o", help="Return log file content to terminal"
     ),
 ):
+    """Show activity logs"""
     Logger.get_logs(last_log, output)
 
 
