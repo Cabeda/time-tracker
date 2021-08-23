@@ -80,7 +80,8 @@ def runSession(time: int, shouldPrompt: bool, sessionType: SessionType):
 def countdown(workMinutes: int):
     workSeconds = workMinutes * 60
     while workSeconds > 0:
-        print(datetime.timedelta(seconds=workSeconds))
+        typer.clear()
+        typer.echo(datetime.timedelta(seconds=workSeconds), nl=True)
         time.sleep(1)
         workSeconds = workSeconds - 1
 
