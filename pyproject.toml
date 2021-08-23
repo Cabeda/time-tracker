@@ -10,7 +10,7 @@ tt = "time_tracker.main:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-typer = "^0.1.0"
+typer = "0.3.2"
 python-dotenv = "^0.12.0"
 
 [tool.poetry.dev-dependencies]
