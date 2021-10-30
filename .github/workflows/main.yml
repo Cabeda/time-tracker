@@ -23,8 +23,6 @@ jobs:
             poetry-version: ${{ matrix.poetry-version }}
         - name: Install deps
           run: poetry install
-        - name: Run Black
-          run: black --check time-tracker
         - name: poetry build
           run: poetry build
         - name: Publish to PyPI
