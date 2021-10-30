@@ -20,6 +20,14 @@
             "args" : ["--workDuration", "1", "--breakDuration","1"]
         },
         {
+            "name": "Python: Run main file scheduler no args",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/time_tracker/main.py",
+            "console": "integratedTerminal",
+            "args" : ["track"]
+        },
+        {
             "name": "Python: Run main file log",
             "type": "python",
             "request": "launch",

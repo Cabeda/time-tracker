@@ -1,12 +1,9 @@
-from typing import Optional
-from time_tracker.log import Logger
 import time
 import datetime
 import typer
 import os
 from enum import Enum
-import logging
-from pathlib import Path
+from time_tracker.log import Logger
 
 
 class SessionType(str, Enum):
@@ -22,6 +19,7 @@ class Mode(str, Enum):
 
 
 app = typer.Typer()
+logger = Logger()
 
 
 @app.callback()
@@ -62,13 +60,11 @@ def runSession(time: int, shouldPrompt: bool, sessionType: SessionType):
     if sessionType == sessionType.workTime:
         workDescription: str = typer.prompt("What do you plan to do?")
 
-        logging.info(
-            f"Started work sessions with {time} minutes. TODO: {workDescription}"
-        )
+        logger.info(f"Work {time} min. TODO: {workDescription}")
         countdown(time)
         notify("Session finished", "Ready for next?")
     else:
-        logging.info(f"Started break session with {time} minutes.")
+        logger.info(f"Started break session with {time} minutes.")
         countdown(time)
         notify("Session finished", "Ready for next?")
 
@@ -107,7 +103,15 @@ def log(
     ),
 ):
     """Show activity logs"""
-    Logger.get_logs(last_log, output)
+    logger.get_logs(last_log, output)
+
+
+@app.command()
+def log_folder():
+    """Prints the current log folder"""
+
+    print(f"Log folder: {os.getenv('TT_LOG_FOLDER')}")
+    print("To change log folder please set TT_LOG_FOLDER env var.")
 
 
 @app.command()
@@ -152,5 +156,7 @@ def track(
 
 
 if __name__ == "__main__":
-    Logger()
-    app()
+    try:
+        app()
+    except Exception as err:
+        logger.error(err)

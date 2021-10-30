@@ -19,7 +19,7 @@ $ time-tracker [OPTIONS] COMMAND [ARGS]...
 * `log`
 * `track`: Run depending on mode
 
-## `time-tracker log`
+## `tt log`
 
 **Usage**:
 
@@ -33,14 +33,14 @@ $ time-tracker log [OPTIONS]
 * `-o, --output`: Return log file content to terminal  [default: False]
 * `--help`: Show this message and exit.
 
-## `time-tracker track`
+## `tt track`
 
 Run depending on mode
 
 **Usage**:
 
 ```console
-$ time-tracker track [OPTIONS]
+$ tt track [OPTIONS]
 ```
 
 **Options**:
