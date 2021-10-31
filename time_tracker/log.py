@@ -17,7 +17,7 @@ class Logger:
         self.log_file = self.log_folder / f"{(datetime.today()).strftime('%Y%m%d')}.log"
         logging.basicConfig(filename=self.log_file, format=FORMAT, level=logging.INFO)
 
-    def get_logs(self, last_log: bool, output: bool) :
+    def get_logs(self, last_log: bool, output: bool):
         if last_log:
             list_of_files = list(self.log_folder.glob("*.log"))
             list_of_files_not_empty = filter(
