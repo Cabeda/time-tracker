@@ -23,6 +23,6 @@ jobs:
             poetry-version: ${{ matrix.poetry-version }}
         - name: Install deps
           run: poetry install
-        - name: Install deps
-          run: pytest
+        - name: Run pytest
+          run: poetry run pytest
         
