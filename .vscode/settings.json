@@ -2,5 +2,10 @@
     "python.pythonPath": "/Users/jose.cabeda/Library/Caches/pypoetry/virtualenvs/time-tracker-RFkl8MHH-py3.8/bin/python",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

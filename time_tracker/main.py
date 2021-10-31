@@ -99,7 +99,7 @@ def notify(title, text):
 def log(
     last_log: bool = typer.Option(False, "--last", "-l", help="Open last log file"),
     output: bool = typer.Option(
-        True, "--output", "-o", help="Return log file content to terminal"
+        False, "--output", "-o", help="Return log file content to terminal"
     ),
 ):
     """Show activity logs"""
