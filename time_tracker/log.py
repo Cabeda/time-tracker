@@ -20,8 +20,8 @@ class Logger:
     def get_logs(self, last_log: bool, output: bool):
         if last_log:
             list_of_files = list(self.log_folder.glob("*.log"))
-            list_of_files_not_empty = filter(
-                lambda x: os.path.getsize(x) > 0, list_of_files
+            list_of_files_not_empty = list(
+                filter(lambda x: os.path.getsize(x) > 0, list_of_files)
             )  # Remove all empty files
 
             if list_of_files_not_empty == []:
