@@ -107,6 +107,20 @@ def log(
 
 
 @app.command()
+def thought(
+    thought: str = typer.Option(False, "--thought", "-t", help="Write a thought"),
+):
+    """Writes a thought into the logs"""
+    logger.write_thought(thought)
+
+
+@app.command()
+def thoughts():
+    """Retrieves all thoughts"""
+    logger.retrieve_thoughts()
+
+
+@app.command()
 def log_folder():
     """Prints the current log folder"""
 

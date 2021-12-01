@@ -9,13 +9,52 @@ class Logger:
     def __init__(self):
         # Load envs
         load_dotenv()
+        self.apply_configs()
 
+    def apply_configs(
+        self, format: str = "%(asctime)-10s | %(levelname)s | %(message)s"
+    ):
         self.log_folder = Path(os.getenv("TT_LOG_FOLDER", "."))
 
-        FORMAT = "%(asctime)-10s | %(levelname)s | %(message)s"
-
         self.log_file = self.log_folder / f"{(datetime.today()).strftime('%Y%m%d')}.log"
-        logging.basicConfig(filename=self.log_file, format=FORMAT, level=logging.INFO)
+        logging.basicConfig(filename=self.log_file, format=format, level=logging.INFO)
+
+    def write_thought(self, message: str):
+
+        logger = logging.getLogger()  # Logger
+        logger_handler = logging.FileHandler(
+            filename=self.log_file
+        )  # Handler for the logger
+        logger.addHandler(logger_handler)
+        FORMAT = "thought: %(message)s"
+
+        # New formatter for the handler:
+        logger_handler.setFormatter(logging.Formatter(FORMAT))
+
+        logging.info(message)
+        logger.removeHandler(logger_handler)
+
+    def retrieve_thoughts(self):
+
+        list_of_files = list(self.log_folder.glob("*.log"))
+
+        thoughts: list[str] = []
+
+        for file in list_of_files:
+            with open(file, "r") as file:
+                content = file.readlines()
+                filtered_logs = list(filter(self.is_thought_line, content))
+
+                if len(filtered_logs) > 0:
+                    thoughts.extend(filtered_logs)
+
+        for thought in thoughts:
+            print(thought)
+
+        return thoughts
+
+    def is_thought_line(self, message: str):
+        return message.startswith("thought")
 
     def get_logs(self, last_log: bool, output: bool):
         if last_log:
