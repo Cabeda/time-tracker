@@ -1,8 +1,11 @@
-import time
 import datetime
-import typer
 import os
+import time
 from enum import Enum
+
+import typer
+from rich.progress import Progress, SpinnerColumn, TextColumn
+
 from time_tracker.log import Logger
 
 
@@ -77,11 +80,22 @@ def runSession(time: int, shouldPrompt: bool, sessionType: SessionType):
 
 def countdown(workMinutes: int):
     workSeconds = workMinutes * 60
-    while workSeconds > 0:
-        typer.clear()
-        typer.echo(datetime.timedelta(seconds=workSeconds), nl=True)
-        time.sleep(1)
-        workSeconds = workSeconds - 1
+
+    value: int = 0
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        transient=True,
+    ) as progress:
+        task1 = progress.add_task(description="Processing", total=workSeconds)
+        while value < workSeconds:
+            progress.update(
+                task1,
+                description=f"Time: {datetime.timedelta(seconds=workSeconds- value)}",
+            )
+            time.sleep(1)
+            value += 1
 
     print("Finished session!")
 
@@ -121,8 +135,8 @@ def thoughts():
 
 
 @app.command()
-def log_folder():
-    """Prints the current log folder"""
+def info():
+    """Prints configs"""
 
     print(f"Log folder: {os.getenv('TT_LOG_FOLDER')}")
     print("To change log folder please set TT_LOG_FOLDER env var.")
