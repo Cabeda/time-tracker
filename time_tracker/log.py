@@ -1,8 +1,9 @@
 import logging
-from datetime import datetime
 import os
-from dotenv import load_dotenv
+from datetime import datetime
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 
 class Logger:
@@ -91,4 +92,5 @@ class Logger:
         logging.warn(data)
 
     def error(self, data):
+        logging.error(data)
         logging.error(data)
