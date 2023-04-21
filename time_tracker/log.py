@@ -21,7 +21,6 @@ class Logger:
         logging.basicConfig(filename=self.log_file, format=format, level=logging.INFO)
 
     def write_thought(self, message: str):
-
         logger = logging.getLogger()  # Logger
         logger_handler = logging.FileHandler(
             filename=self.log_file
@@ -36,7 +35,6 @@ class Logger:
         logger.removeHandler(logger_handler)
 
     def retrieve_thoughts(self):
-
         list_of_files = list(self.log_folder.glob("*.log"))
 
         thoughts: list[str] = []
