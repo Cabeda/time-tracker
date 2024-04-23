@@ -63,7 +63,8 @@ def runSession(time: int, shouldPrompt: bool, sessionType: SessionType):
     if sessionType == sessionType.workTime:
         workDescription: str = typer.prompt("What do you plan to do?")
 
-        logger.info(f"Work {time} min. TODO: {workDescription}")
+        # logger.info(f"Work {time} min. TODO: {workDescription}")
+        logger.write_thought(workDescription)
         countdown(time)
         notify("Session finished", "Ready for next?")
     else:
