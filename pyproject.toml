@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "time-tracker"
-version = "0.5.1"
+version = "0.5.2"
 description = "CLI to track time spent on tasks using pomodoro technique"
 authors = ["Jose Cabeda <jecabeda@gmail.com>"]
 readme = "README.md"

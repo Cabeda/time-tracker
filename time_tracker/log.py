@@ -1,4 +1,3 @@
-import logging
 import os
 from datetime import datetime
 from pathlib import Path
@@ -10,7 +9,7 @@ class Logger:
     def __init__(self):
         # Load envs
         load_dotenv()
-        # self.apply_configs()
+        self.apply_configs()
 
     def apply_configs(
         self, format: str = "%(asctime)-10s | %(levelname)s | %(message)s"
@@ -18,7 +17,7 @@ class Logger:
         self.log_folder = Path(os.getenv("TT_LOG_FOLDER", "."))
 
         self.log_file = self.log_folder / f"{(datetime.today()).strftime('%Y%m%d')}.log"
-        logging.basicConfig(filename=self.log_file, format=format, level=logging.WARN)
+        # logging.basicConfig(filename=self.log_file, format=format, level=logging.WARN)
 
     def write_thought(self, message: str):
         # logger = logging.getLogger()  # Logger
