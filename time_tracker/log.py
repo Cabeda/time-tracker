@@ -10,7 +10,7 @@ class Logger:
     def __init__(self):
         # Load envs
         load_dotenv()
-        self.apply_configs()
+        # self.apply_configs()
 
     def apply_configs(
         self, format: str = "%(asctime)-10s | %(levelname)s | %(message)s"
