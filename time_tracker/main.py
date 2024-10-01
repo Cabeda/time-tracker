@@ -1,12 +1,12 @@
 import datetime
+import logging
 import os
 import time
 from enum import Enum
 
 import typer
+from log import Logger
 from rich.progress import Progress, SpinnerColumn, TextColumn
-
-from time_tracker.log import Logger
 
 
 class SessionType(str, Enum):
@@ -21,7 +21,7 @@ class Mode(str, Enum):
     pomodoro = "pomodoro"
 
 
-app = typer.Typer()
+app = typer.Typer(no_args_is_help=True)
 logger = Logger()
 
 
@@ -30,6 +30,7 @@ def callback():
     """
     Time tracker cli
     """
+    pass
 
 
 def checkNextTurn(
@@ -188,4 +189,4 @@ if __name__ == "__main__":
     try:
         app()
     except Exception as err:
-        logger.error(err)
+        logging.error(err)
