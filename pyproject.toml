@@ -1,6 +1,6 @@
 [project]
 name = "time-tracker"
-version = "0.5.2"
+version = "0.5.3"
 description = "CLI to track time spent on tasks using pomodoro technique"
 readme = "README.md"
 requires-python = ">=3.11"
