@@ -2,6 +2,8 @@
 
 Time tracker cli
 
+[![Main](https://github.com/Cabeda/time-tracker/actions/workflows/main.yml/badge.svg)](https://github.com/Cabeda/time-tracker/actions/workflows/main.yml)
+
 **Usage**:
 
 ```console
